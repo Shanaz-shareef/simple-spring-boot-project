@@ -23,7 +23,7 @@ public class Policy {
     @Column(name="policy_name")
     private String policyName;
     @Column(name="policy_type")
-    private double policyType;
+    private String policyType;
     @Column(name="premium_amount")
     private double premiumAmount;
     @Column(name="coverage_amount")
@@ -33,7 +33,7 @@ public class Policy {
 
     private LocalDate endDate;
     @ManyToMany(mappedBy = "policies")
-    private Set<Customer>customer;
+    private Set<Customer>customers;
     @OneToMany(mappedBy="policy", cascade = CascadeType.ALL)
     private Set<Claim>claims;
 
