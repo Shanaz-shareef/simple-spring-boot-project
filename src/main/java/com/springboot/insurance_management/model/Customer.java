@@ -2,9 +2,7 @@ package com.springboot.insurance_management.model;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -17,6 +15,7 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="customers")
 public class Customer {
     @Id
