@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,7 +34,7 @@ public class Policy {
 
     private LocalDate endDate;
     @ManyToMany(mappedBy = "policies")
-    private Set<Customer>customers;
+    private List<Customer> customers;
     @OneToMany(mappedBy="policy", cascade = CascadeType.ALL)
     private Set<Claim>claims;
 
