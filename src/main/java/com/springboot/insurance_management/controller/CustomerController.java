@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
     @Autowired
     CustomerService service;
+    //http://localhost:8080/api/customers/getall
     @GetMapping("/getall")
     public List<Customer> getAllCustomers(){
        return service.getAllCustomers();
     }
+
+    //http://localhost:8080/api/customers/getcustomer/5
     @GetMapping("getcustomer/{id}")
     public Customer getCustomerById(@PathVariable("id") int id){
 
@@ -28,5 +31,6 @@ public class CustomerController {
         Customer savedCustomer=service.addCustomer(customer);
        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED) ;
     }
+
 
 }
