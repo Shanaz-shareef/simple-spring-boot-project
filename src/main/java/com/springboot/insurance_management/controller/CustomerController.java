@@ -20,12 +20,13 @@ public class CustomerController {
        return service.getAllCustomers();
     }
 
-    //http://localhost:8080/api/customers/getcustomer/5
+    //http://localhost:8080/api/customers/getcustomer/3
     @GetMapping("getcustomer/{id}")
     public Customer getCustomerById(@PathVariable("id") int id){
 
         return service.getCustomerById(id);
     }
+    //http://localhost:8080/api/customers
     @PostMapping()
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
         Customer savedCustomer=service.addCustomer(customer);
