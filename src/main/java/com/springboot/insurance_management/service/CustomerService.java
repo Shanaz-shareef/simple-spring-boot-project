@@ -8,8 +8,10 @@ import exception.DuplicateResourceException;
 import exception.EmptyInputException;
 import exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -24,7 +26,8 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(int id) {
-       return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("customer"+"id"+String.valueOf(id)));
+       return repository.findById(id).orElseThrow(()->new ResourceNotFoundException
+               ("customer","id",String.valueOf(id)));
     }
 
     public Customer addCustomer(Customer customer) {
@@ -39,5 +42,6 @@ public class CustomerService {
             throw new DuplicateResourceException("customer"+"customer with the email already exists");
         }
         return repository.save(customer);
-    }
-}
+    }}
+
+

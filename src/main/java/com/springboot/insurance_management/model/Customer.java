@@ -1,10 +1,8 @@
 package com.springboot.insurance_management.model;
 
-import jakarta.annotation.Nullable;
+
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.engine.internal.Cascade;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.util.List;
