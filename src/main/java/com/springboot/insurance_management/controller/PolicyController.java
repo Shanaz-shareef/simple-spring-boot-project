@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -45,7 +46,7 @@ public class PolicyController {
     }
       //http://localhost:8080/api/v1/policy/1/customers
     @GetMapping("/policy/{policyId}/customers")
-    public ResponseEntity<List<Customer>>getCustomersByPolicyId(@PathVariable("policyId")int policyId){
+    public ResponseEntity<Set<Customer>>getCustomersByPolicyId(@PathVariable("policyId")int policyId){
         return policyService.getCustomersByPolicyId(policyId);
 
     }
