@@ -27,9 +27,13 @@ public class Claim {
     private String claimStatus;
 
     private LocalDate claimDate;
+
+    //many to one mapping with customer
     @ManyToOne
     @JoinColumn(name="customer_id", nullable = false)
-    private Customer customers;
+    private Customer customer;
+
+    //many-to-one mapping with policy
     @ManyToOne
     @JoinColumn(name="policy_id", nullable = false)
     private Policy policy;

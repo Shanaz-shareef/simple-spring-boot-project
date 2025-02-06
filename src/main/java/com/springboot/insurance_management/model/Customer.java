@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="customers")
+@Table(name="customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,18 @@ public class Customer {
     private int phoneNumber;
     @Column(nullable = false, name="date_of_birth")
     private LocalDate dateOfBirth;
+
+    //many-to-many mapping with policy
     @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable( joinColumns=@JoinColumn(name="customer_id"),
+    @JoinTable(
+            name="customer_policy",
+            joinColumns=@JoinColumn(name="customer_id"),
             inverseJoinColumns =@JoinColumn(name="policy_id")
 
     )
     private Set<Policy> policies;
-    @OneToMany(mappedBy = "customers")
+
+    //one-to-many with claims
+    @OneToMany(mappedBy = "customer" ,cascade=CascadeType.ALL, orphanRemoval = true)
     private List<Claim>claims;
 }

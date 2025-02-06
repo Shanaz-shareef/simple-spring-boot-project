@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PolicyService {
@@ -41,11 +39,11 @@ public class PolicyService {
         return new ResponseEntity<>("Policy deleted successfully", HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Customer>> getCustomersByPolicyId(int policyId) {
+    public ResponseEntity<Set<Customer>> getCustomersByPolicyId(int policyId) {
         Policy policy = policyRepository.findById(policyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Policy", "policyId", String.valueOf(policyId)));
 
-        List<Customer> customers = new ArrayList<>(policy.getCustomers());
+        Set<Customer> customers = new HashSet<>(policy.getCustomers());
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 

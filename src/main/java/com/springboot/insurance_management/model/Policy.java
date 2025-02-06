@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,9 +34,13 @@ public class Policy {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    //many-to-many mapping with customer
     @ManyToMany(mappedBy = "policies")
-    private List<Customer> customers;
-    @OneToMany(mappedBy="policy", cascade = CascadeType.ALL)
+    private Set<Customer> customers=new HashSet<>();
+
+    //one-to-many mapping with Claims
+    @OneToMany(mappedBy="policy", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Claim>claims;
 
 }
