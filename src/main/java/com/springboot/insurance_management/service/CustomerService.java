@@ -17,31 +17,31 @@ import java.util.Optional;
 @Service
 public class CustomerService {
    @Autowired
-    CustomerRepositoy repository;
+    CustomerRepositoy customerRepository;
     public List<Customer> getAllCustomers() {
 
-       List<Customer>customers= repository.findAll();
+       List<Customer>customers= customerRepository.findAll();
 
        return customers;
     }
 
     public Customer getCustomerById(int id) {
-       return repository.findById(id).orElseThrow(()->new ResourceNotFoundException
+       return customerRepository.findById(id).orElseThrow(()->new ResourceNotFoundException
                ("customer","id",String.valueOf(id)));
     }
 
     public Customer addCustomer(Customer customer) {
-        if(customer.getName().trim().isEmpty() || customer.getName()==null){
+        if(customer.getName()==null || customer.getName().trim().isEmpty()  ){
             throw new EmptyInputException("customer"+"customer name cannot be empty");
         }
-        if(customer.getEmail().trim().isEmpty() || customer.getEmail()==null){
+        if(customer.getEmail()==null || customer.getEmail().trim().isEmpty()  ){
             throw new EmptyInputException("customer"+"customer email cannot be empty");
         }
-          Optional<Customer> existingCustomer=repository.findByEmail(customer.getEmail());
+          Optional<Customer> existingCustomer=customerRepository.findByEmail(customer.getEmail());
         if(existingCustomer.isPresent()){
             throw new DuplicateResourceException("customer"+"customer with the email already exists");
         }
-        return repository.save(customer);
+        return customerRepository.save(customer);
     }}
 
 

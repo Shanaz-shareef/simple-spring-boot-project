@@ -13,25 +13,25 @@ import java.util.List;
 @Service
 public class ClaimService {
     @Autowired
-    ClaimRepositoy claimRepositoy;
+    ClaimRepositoy claimRepository;
 
     public Claim saveClaim(int policyId,Claim claim) {
-        return claimRepositoy.save(claim);
+        return claimRepository.save(claim);
     }
     public Claim getByClaimId(int claimId) {
-        return claimRepositoy.findById(claimId).orElseThrow(()->new ResourceNotFoundException("claim"+"id"+String.valueOf(claimId)));
+        return claimRepository.findById(claimId).orElseThrow(()->new ResourceNotFoundException("claim"+"id"+String.valueOf(claimId)));
     }
 
     public ResponseEntity<String> deleteClaim(int claimId) {
-       claimRepositoy.deleteById(claimId);
+        claimRepository.deleteById(claimId);
        return new ResponseEntity<>("claim deleted successfully", HttpStatus.OK);
     }
 
     public Claim updateClaim( Claim claim){
-        return claimRepositoy.save(claim);
+        return claimRepository.save(claim);
     }
 
     public List<Claim> getAllClaims() {
-       return claimRepositoy.findAll();
+       return claimRepository.findAll();
     }
 }

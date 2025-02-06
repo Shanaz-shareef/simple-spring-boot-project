@@ -33,7 +33,7 @@ public class PolicyController {
          return policyService.getPolicyByPolicyId(policyId);
      }
      //http://localhost:8080/api/v1/policies/1
-    @DeleteMapping("policies/{policyId}")
+    @DeleteMapping("/policies/{policyId}")
     public ResponseEntity<String> deletePolicy(@PathVariable int policyId){
         return policyService.deletePolicy(policyId);
     }
@@ -42,7 +42,7 @@ public class PolicyController {
     public ResponseEntity<String> createPolicyByCustomerId(@PathVariable("customerId") int customerId, @RequestBody Policy policy) {
         policyService.createPolicyByCustomerId( customerId,policy);
 
-        return new ResponseEntity<>("Policy created with customer id:", HttpStatus.CREATED);
+        return new ResponseEntity<>("Policy created with customer ID:" + customerId, HttpStatus.CREATED);
     }
       //http://localhost:8080/api/v1/policy/1/customers
     @GetMapping("/policy/{policyId}/customers")
