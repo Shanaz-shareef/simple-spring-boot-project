@@ -16,42 +16,47 @@ import java.util.Set;
 public class PolicyController {
     @Autowired
     PolicyService policyService;
+
+    //create a policy
     //http://localhost:8080/api/v1/policy
-     @PostMapping("/policy")
-    public ResponseEntity<Policy> createPolicy(@ RequestBody Policy policy){
-        Policy savedPolicy= policyService.createPolicy(policy);
-         return new ResponseEntity<>(savedPolicy, HttpStatus.CREATED);
-     }
-   //http://localhost:8080/api/v1/policies/getall
-     @GetMapping("/policies/getall")
-    public List<Policy> getAllPolicies(){
-     return    policyService.getAllPolicies();
-     }
+    @PostMapping("/policy")
+    public ResponseEntity<Policy> createPolicy(@RequestBody Policy policy) {
+        Policy savedPolicy = policyService.createPolicy(policy);
+        return new ResponseEntity<>(savedPolicy, HttpStatus.CREATED);
+    }
+
+    //get all policies
+    //http://localhost:8080/api/v1/policies/getall
+    @GetMapping("/policies/getall")
+    public List<Policy> getAllPolicies() {
+        return policyService.getAllPolicies();
+    }
+
+    //get policy by policy id
     //http://localhost:8080/api/v1/policies/1
-     @GetMapping("/policies/{policyId}")
-    public Policy getPolicyByPolicyId(@PathVariable  int policyId){
-         return policyService.getPolicyByPolicyId(policyId);
-     }
-     //http://localhost:8080/api/v1/policies/1
-    @DeleteMapping("/policies/{policyId}")
-    public ResponseEntity<String> deletePolicy(@PathVariable int policyId){
+    @GetMapping("/policies/{policyId}")
+    public Policy getPolicyByPolicyId(@PathVariable int policyId) {
+        return policyService.getPolicyByPolicyId(policyId);
+    }
+
+    //http://localhost:8080/api/v1/policy/1
+    @DeleteMapping("/policy/{policyId}")
+    public ResponseEntity<String> deletePolicy(@PathVariable int policyId) {
         return policyService.deletePolicy(policyId);
     }
-    ////http://localhost:8080/api/v1/customers/1/policies
-    @PostMapping("/customers/{customerId}/policies")
-    public ResponseEntity<String> createPolicyByCustomerId(@PathVariable("customerId") int customerId, @RequestBody Policy policy) {
-        policyService.createPolicyByCustomerId( customerId,policy);
 
-        return new ResponseEntity<>("Policy created with customer ID:" + customerId, HttpStatus.CREATED);
+    //Assign a policy to customer id
+    //http://localhost:8080/api/v1/policy/{policyId}/customers/{customerId}
+    @GetMapping("/policy/{policyId}/customers/{customerId}")
+    public ResponseEntity<String> AssignPolicyToCustomer(@PathVariable("policyId") int policyId,@PathVariable int customerId) {
+         policyService.AssignPolicyToCustomer(policyId,customerId);
+       return new ResponseEntity<>("Policy assigned to customer successfully",HttpStatus.OK);
     }
-      //http://localhost:8080/api/v1/policy/1/customers
-    @GetMapping("/policy/{policyId}/customers")
-    public ResponseEntity<Set<Customer>>getCustomersByPolicyId(@PathVariable("policyId")int policyId){
-        return policyService.getCustomersByPolicyId(policyId);
 
-    }
-//    @GetMapping("customer/{customerId}/Policies")
-//    public ResponseEntity<List<Policy>>getAllPoliciesByCustomerId(@PathVariable("customerId")int customerId){
-//        return policyService.getAllPolicyByCustomerId(customerId);
+    //get all customer linked to a policy
+    //http://localhost:8080/api/v1/{policyId}/customers
+    @GetMapping("/{policyId}/customers")
+    public Set<Customer>  getCustomersByPolicy(@PathVariable int policyId){
+        return policyService.getCustomersByPolicy(policyId);
 
-}
+}}

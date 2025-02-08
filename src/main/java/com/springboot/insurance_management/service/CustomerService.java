@@ -2,6 +2,7 @@ package com.springboot.insurance_management.service;
 
 
 import com.springboot.insurance_management.model.Customer;
+import com.springboot.insurance_management.model.Policy;
 import com.springboot.insurance_management.repository.CustomerRepositoy;
 
 import exception.DuplicateResourceException;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class CustomerService {
    @Autowired
@@ -32,16 +35,31 @@ public class CustomerService {
 
     public Customer addCustomer(Customer customer) {
         if(customer.getName()==null || customer.getName().trim().isEmpty()  ){
-            throw new EmptyInputException("customer"+"customer name cannot be empty");
+            throw new EmptyInputException("Customer name cannot be empty");
         }
         if(customer.getEmail()==null || customer.getEmail().trim().isEmpty()  ){
-            throw new EmptyInputException("customer"+"customer email cannot be empty");
+            throw new EmptyInputException("Customer email cannot be empty");
         }
           Optional<Customer> existingCustomer=customerRepository.findByEmail(customer.getEmail());
         if(existingCustomer.isPresent()){
-            throw new DuplicateResourceException("customer"+"customer with the email already exists");
+            throw new DuplicateResourceException("Customer with this email already exists");
         }
         return customerRepository.save(customer);
-    }}
+    }
+
+    //get policies linked to a customer
+    public Set<Policy> getPoliciesByCustomerId(int customerId) {
+        Customer customer=customerRepository.findById(customerId).orElseThrow(
+                ()->new ResourceNotFoundException("Customer","customerId",String.valueOf(customerId)));
+        return customer.getPolicies();
+    }
+
+    //delete customer by id
+     public void deleteCustomerById(int customerId) {
+        Customer customer=customerRepository.findById(customerId).orElseThrow(
+                ()->new ResourceNotFoundException("Customer","customerId",String.valueOf(customerId)));
+        customerRepository.delete(customer);
+    }
+}
 
 

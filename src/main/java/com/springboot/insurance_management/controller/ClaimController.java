@@ -14,9 +14,12 @@ import java.util.List;
 public class ClaimController {
     @Autowired
     ClaimService claimService;
-    @PostMapping("/{policyId}")
-    public ResponseEntity<Claim> saveClaim( @PathVariable int policyId ,@RequestBody Claim claim){
-       Claim savedClaim=claimService.saveClaim(policyId,claim);
+
+    //create claim linked to policy and customer
+    //http://localhost:8080/api/claims/{policyId}/customers/{customerId}
+    @PostMapping("/{policyId}/customers/{customerId}")
+    public ResponseEntity<Claim> saveClaim( @PathVariable int policyId ,@PathVariable int customerId,@RequestBody Claim claim){
+       Claim savedClaim=claimService.saveClaim(policyId,customerId,claim);
        return new ResponseEntity<>(savedClaim, HttpStatus.CREATED);
     }
     @GetMapping("/{claimId}")
@@ -27,10 +30,7 @@ public class ClaimController {
     public ResponseEntity<String> deleteClaim(@PathVariable int claimId){
        return claimService.deleteClaim(claimId);
     }
- @PutMapping("/{claimId}")
-    public Claim updateClaim(@RequestBody Claim claim){
-        return claimService.updateClaim(claim);
-    }
+
    @GetMapping("/getAll")
     public List<Claim> getAllClaims(){
         return claimService.getAllClaims();
